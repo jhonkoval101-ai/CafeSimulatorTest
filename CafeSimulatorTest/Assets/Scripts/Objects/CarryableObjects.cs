@@ -68,6 +68,23 @@ public class CarryableObject : MonoBehaviour
 
     private void Decompose()
     {
+        if (GameManager.Instance == null)
+        {
+            Debug.LogError("ERROR: GameManager Instance is NULL! Cannot add pollution.");
+
+            // Пробуем найти в сцене вручную (новый метод для Unity 6)
+            GameManager manualFind = FindFirstObjectByType<GameManager>();
+            if (manualFind != null)
+            {
+                manualFind.AddPollution(pollutionAmount);
+            }
+        }
+        else
+        {
+            // Всё хорошо, добавляем загрязнение
+            GameManager.Instance.AddPollution(pollutionAmount);
+        }
+
         Debug.Log($"Object {gameObject.name} decomposed! Pollution: {pollutionAmount}");
         Destroy(gameObject);
     }
