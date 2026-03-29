@@ -43,12 +43,13 @@ public class CarryableObject : MonoBehaviour
         CancelInvoke(nameof(Decompose));
     }
 
-    public void Drop()
+    public void Drop(Vector3 dropPosition)
     {
         _isHeld = false;
 
         // Отцепляем от родителя
         transform.SetParent(null);
+        transform.position = dropPosition;
 
         // Включаем физику
         Rigidbody rb = GetComponent<Rigidbody>();
@@ -56,6 +57,9 @@ public class CarryableObject : MonoBehaviour
         {
             rb.isKinematic = false;
             rb.useGravity = true;
+
+            // Добавляем небольшую силу вперед
+            rb.AddForce(transform.forward * 2f + Vector3.up * 1f, ForceMode.Impulse);
         }
 
         // Запускаем разложение

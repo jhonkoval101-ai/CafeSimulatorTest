@@ -67,7 +67,9 @@ public class PlayerInteract : MonoBehaviour
     {
         if (_heldObject == null) return;
 
-        _heldObject.Drop();
+        Vector3 dropPoint = transform.position + transform.forward * 1.5f + Vector3.up * 0.5f;
+
+        _heldObject.Drop(dropPoint);
         _heldObject = null;
         Debug.Log("Dropped object");
     }
