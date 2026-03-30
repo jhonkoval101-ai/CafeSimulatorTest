@@ -1460,8 +1460,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3182181531337843724, guid: 158b4d5128ccd004892133f96996296f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1971900147}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1860863436467247706, guid: 158b4d5128ccd004892133f96996296f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1859647885}
   m_SourcePrefab: {fileID: 100100000, guid: 158b4d5128ccd004892133f96996296f, type: 3}
 --- !u!1 &1732201351 stripped
 GameObject:
@@ -1549,6 +1555,65 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1732201355}
   m_SourcePrefab: {fileID: 100100000, guid: 82463bcdcfa365d439e523ebe38bd61d, type: 3}
+--- !u!1 &1859647883 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1860863436467247706, guid: 158b4d5128ccd004892133f96996296f, type: 3}
+  m_PrefabInstance: {fileID: 1659302826}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1859647884 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3182181531337843724, guid: 158b4d5128ccd004892133f96996296f, type: 3}
+  m_PrefabInstance: {fileID: 1659302826}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1859647885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859647883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9255ebad0643e0243a6c4b1adb204e94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GardenBed
+  growthTime: 10
+  maxVegetables: 4
+  pollutionThreshold: 20
+  spawnPoint: {fileID: 1971900147}
+  vegetablePrefab: {fileID: 6419160370511956775, guid: a656f5ffaf2b20f4399f906c3d828ce4, type: 3}
+  sellPrice: 10
+--- !u!1 &1971900146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1971900147}
+  m_Layer: 0
+  m_Name: VegetableSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1971900147
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1971900146}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1859647884}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2141637805
 GameObject:
   m_ObjectHideFlags: 0

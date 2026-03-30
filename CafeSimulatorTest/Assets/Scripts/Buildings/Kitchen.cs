@@ -34,21 +34,20 @@ public class Kitchen : MonoBehaviour
 
     private void ProduceFood()
     {
-        // Проверяем, есть ли место на кассе
         if (_foodCount >= maxFoodOnCashier)
         {
             Debug.Log("Kitchen: Cashier is full!");
             return;
         }
 
-        // Создаём еду
         if (foodPrefab != null && cashierSpawnPoint != null)
         {
             GameObject food = Instantiate(foodPrefab, cashierSpawnPoint.position, Quaternion.identity);
-            food.transform.SetParent(cashierSpawnPoint);
+            // НЕ делаем дочерним! (убираем SetParent)
+            // food.transform.SetParent(cashierSpawnPoint);
+
             _foodCount++;
 
-            // Добавляем загрязнение
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.AddPollution(pollutionAmount);

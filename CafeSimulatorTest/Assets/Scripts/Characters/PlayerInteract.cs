@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerInteract : MonoBehaviour
 {
     [Header("Interaction Settings")]
-    [SerializeField] private float interactRange = 3f;
+    [SerializeField] private float interactRange = 5f;
 
     private CarryableObject _heldObject;
     private Camera _mainCamera;
@@ -39,21 +39,32 @@ public class PlayerInteract : MonoBehaviour
 
     private void TryPickUp()
     {
-        // Используем Physics.OverlapSphere для поиска объектов рядом
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, interactRange);
+        // Находим все объекты с CarryableObject
+        CarryableObject[] allCarryables = FindObjectsByType<CarryableObject>(FindObjectsSortMode.None);
 
-        foreach (var hit in hitColliders)
+        // Сортируем по расстоянию вручную
+        System.Array.Sort(allCarryables, (a, b) =>
         {
-            CarryableObject carryable = hit.GetComponent<CarryableObject>();
-            if (carryable != null && !carryable.IsHeld)
+            float distA = Vector3.Distance(transform.position, a.transform.position);
+            float distB = Vector3.Distance(transform.position, b.transform.position);
+            return distA.CompareTo(distB);
+        });
+
+        Debug.Log($"Found {allCarryables.Length} carryable objects");
+
+        foreach (var carryable in allCarryables)
+        {
+            float distance = Vector3.Distance(transform.position, carryable.transform.position);
+            Debug.Log($"Object: {carryable.gameObject.name}, Distance: {distance:F1}, IsHeld: {carryable.IsHeld}");
+
+            if (distance <= interactRange && !carryable.IsHeld)
             {
-                // Проверяем, что объект виден камере (опционально)
                 PickUpObject(carryable);
                 return;
             }
         }
 
-        Debug.Log("No pickupable object nearby");
+        Debug.Log("No pickupable object nearby!");
     }
 
     private void PickUpObject(CarryableObject obj)
