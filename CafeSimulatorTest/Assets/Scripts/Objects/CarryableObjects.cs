@@ -16,6 +16,10 @@ public class CarryableObject : MonoBehaviour
     public float decomposeTime = 5f;
     public float pollutionAmount = 10f;
 
+    [Header("Economy")]
+    [Tooltip("Штраф за вывоз этого предмета мусоровозом")]
+    public int disposalPenalty = 0;
+
     private bool _isHeld = false;
     private Transform _heldParent;
 

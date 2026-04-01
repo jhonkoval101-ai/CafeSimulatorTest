@@ -7,6 +7,7 @@ TagManager:
   - Road
   - Cashier
   - Kitchen
+  - TrashBag
   layers:
   - Default
   - TransparentFX
