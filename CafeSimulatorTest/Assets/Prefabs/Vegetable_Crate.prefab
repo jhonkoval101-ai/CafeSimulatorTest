@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8513978041671642278}
   - component: {fileID: -8463877264614396076}
   m_Layer: 0
-  m_Name: Vegetable_Box
+  m_Name: Vegetable_Crate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,6 +50,7 @@ MonoBehaviour:
   type: 1
   decomposeTime: 60
   pollutionAmount: 5
+  disposalPenalty: 0
 --- !u!65 &8513978041671642278
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -69,7 +70,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0, y: 0, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &-8463877264614396076
 Rigidbody:

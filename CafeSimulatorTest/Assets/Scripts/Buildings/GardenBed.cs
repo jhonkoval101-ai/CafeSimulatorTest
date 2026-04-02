@@ -4,7 +4,7 @@ public class GardenBed : MonoBehaviour
 {
     [Header("Growth Settings")]
     [SerializeField] private float growthTime = 10f; // Время роста овощей
-    [SerializeField] private int maxVegetables = 2; // Максимум овощей на грядке
+    [SerializeField] private int maxVegetables = 5; // Максимум овощей на грядке
     [SerializeField] private float pollutionThreshold = 75f; // Макс. загрязнение для роста
 
     [Header("References")]
@@ -16,6 +16,13 @@ public class GardenBed : MonoBehaviour
 
     private float _growthTimer = 0f;
     private int _vegetableCount = 0;
+    private BoxCollider _bedCollider; // Добавили коллайдер для границ
+
+    void Start()
+    {
+        // Пытаемся получить коллайдер
+        _bedCollider = GetComponent<BoxCollider>();
+    }
 
     void Update()
     {
@@ -54,16 +61,43 @@ public class GardenBed : MonoBehaviour
             return;
         }
 
-        if (vegetablePrefab != null && spawnPoint != null)
+        if (vegetablePrefab != null)
         {
-            GameObject vegetable = Instantiate(vegetablePrefab, spawnPoint.position, Quaternion.identity);
-            // НЕ делаем дочерним!
-            // vegetable.transform.SetParent(spawnPoint);
+            //Используем рандомную позицию вместо spawnPoint
+            Vector3 spawnPos = GetRandomPosition();
 
+            Instantiate(vegetablePrefab, spawnPos, Quaternion.identity);
             _vegetableCount++;
 
             Debug.Log($"GardenBed: Grew vegetables! Total: {_vegetableCount}/{maxVegetables}");
         }
+    }
+
+    //случайная позиция внутри грядки
+    private Vector3 GetRandomPosition()
+    {
+        Vector3 center = transform.position;
+        float halfX, halfZ;
+
+        // Если есть коллайдер — используем его границы
+        if (_bedCollider != null)
+        {
+            halfX = _bedCollider.size.x * 0.5f * transform.lossyScale.x;
+            halfZ = _bedCollider.size.z * 0.5f * transform.lossyScale.z;
+        }
+        else
+        {
+            // Иначе используем Scale
+            halfX = transform.localScale.x * 0.5f;
+            halfZ = transform.localScale.z * 0.5f;
+        }
+
+        // Генерируем случайные смещения
+        float randomX = Random.Range(-halfX, halfX);
+        float randomZ = Random.Range(-halfZ, halfZ);
+
+        // Возвращаем позицию (Y чуть выше грядки)
+        return center + transform.right * randomX + transform.forward * randomZ + Vector3.up * 0.6f;
     }
 
     // Метод для уменьшения счётчика (вызывается при продаже)
@@ -82,9 +116,18 @@ public class GardenBed : MonoBehaviour
     // Визуализация в редакторе
     void OnDrawGizmosSelected()
     {
-        // Показываем радиус грядки
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, 2f);
+        // Рисуем границы грядки
+        if (TryGetComponent<BoxCollider>(out var col))
+        {
+            Gizmos.DrawWireCube(transform.position,
+            new Vector3(col.size.x * transform.lossyScale.x,0.1f, col.size.z * transform.lossyScale.z));
+        }
+        else
+        {
+            Gizmos.DrawWireCube(transform.position,
+                new Vector3(transform.localScale.x, 0.1f, transform.localScale.z));
+        }
+
 
         // Индикатор загрязнения
         if (GameManager.Instance != null)

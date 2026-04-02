@@ -34,6 +34,7 @@ public class PlayerMove : MonoBehaviour
         // Если нет ввода — ничего не делаем
         if (Mathf.Abs(horizontal) < 0.01f && Mathf.Abs(vertical) < 0.01f)
         {
+            LockY();
             return;
         }
 
@@ -45,6 +46,7 @@ public class PlayerMove : MonoBehaviour
         // Убираем наклон по Y (чтобы игрок не летел вверх/вниз, если камера наклонена)
         camForward.y = 0f;
         camRight.y = 0f;
+
 
         // Нормализуем, чтобы длина векторов была 1
         camForward.Normalize();
@@ -68,5 +70,14 @@ public class PlayerMove : MonoBehaviour
 
         // 4. Двигаем игрока
         controller.Move(moveDirection * moveSpeed * Time.deltaTime);
+        LockY();
+    }
+
+    private void LockY()
+    {
+        Vector3 pos = transform.position;
+        pos.y = 1.0f; // Высота игрока
+        transform.position = pos;
     }
 }
+
